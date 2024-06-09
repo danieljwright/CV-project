@@ -6,3 +6,13 @@ In this blog post we present the results of our study into whether CNN's learn s
 ## 1. Introduction
 
 As the applications of computer vision have grown and deep learning models have become more ubiqutious, the environmental impact of training these models becomes apparent. One solution to the water usage and carbon emissions of training models is to use warm-starting. This is the process of initalising model weights using weights from previously trained models, instead of random initialisation. 
+
+
+
+
+## 5. Results
+
+With fixed noise levels: 20x runs with the three different similarity measures, record train_loss and test accuracy. calculate average and std dev. Also record similarity scores somehow??
+
+Calculate similarity between random and final, and then intial warm start and final warm start and compare the result.
+
