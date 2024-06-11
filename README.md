@@ -27,8 +27,7 @@ We then define a simple Convolutional Neural Network, which will train on all of
 
 The three similarity metrics that we use to compare filters across our six different models are as follows : 
 
-1) Cosine Similarity : We flatten the two filters to be compared so that they become one dimensional vectors and then compute the cosine similarity between them using torch.nn.functional.cosine_similarity() which emplys the following formula, 
-
+1) Cosine Similarity : We flatten the two filters to be compared so that they become one dimensional vectors and then compute the cosine similarity between them using torch.nn.functional.cosine_similarity() which emplys the following formula,
 ![similarity](https://latex.codecogs.com/png.latex?\dpi{110}\color{white}%20\text{similarity}%20=%20\frac{x_1%20\cdot%20x_2}{\max(%7C%7Cx_1%7C%7C_2,%20\epsilon)%20\cdot%20\max(%7C%7Cx_2%7C%7C_2,%20\epsilon)})
 
 where x<sub>1</sub> and x<sub>2</sub> are the flattened vectors.
@@ -36,7 +35,7 @@ where x<sub>1</sub> and x<sub>2</sub> are the flattened vectors.
 ![Frobenius Norm](https://latex.codecogs.com/png.latex?\dpi{110}\color{white}%5C%7CA%20-%20B%5C%7C_F%20%3D%20%5Csqrt%7B%5Csum_%7Bi%3D1%7D%5Em%20%5Csum_%7Bj%3D1%7D%5En%20%7Ca_%7Bij%7D%20-%20b_%7Bij%7D%7C%5E2%7D)
 
 Where:
-- \( A \) and \( B \) are \( 28 \times 28 \) matrices.
+- \( A \) and \( B \) are m*n (28*28) matrices.
 - \( a_{ij} \) and \( b_{ij} \) are the elements in the \( i \)-th row and \( j \)-th column of \( A \) and \( B \), respectively.
 
 
