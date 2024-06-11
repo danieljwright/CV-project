@@ -29,7 +29,7 @@ The three similarity metrics that we use to compare filters across our six diffe
 
 1) Cosine Similarity : We flatten the two filters to be compared so that they become one dimensional vectors and then compute the cosine similarity between them using torch.nn.functional.cosine_similarity() which emplys the following formula, 
 
-![similarity](https://latex.codecogs.com/png.latex?\dpi{110} \text{similarity} = \frac{x_1 \cdot x_2}{\max(\|x_1\|_2, \epsilon) \cdot \max(\|x_2\|_2, \epsilon)})
+![similarity](https://latex.codecogs.com/png.latex?\dpi{110}%20\text{similarity}%20=%20\frac{x_1%20\cdot%20x_2}{\max(\|x_1\|_2,%20\epsilon)%20\cdot%20\max(\|x_2\|_2,%20\epsilon)})
 
 where x_1 and x_2 are the flattened vectors.
 2) 
