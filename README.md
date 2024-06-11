@@ -43,7 +43,7 @@ Where:
 
 3) Pearson Correlation Coefficient : We flatten the two filters into 1-D vectors and then find the Pearson Correlation Coefficient between them, using numpy.corrcoef().
 
-![Pearson correlation coefficient formula](https://latex.codecogs.com/png.latex?\dpi{300}&space;\bg_black&space;\color{white}&space;r&space;=&space;\frac{\sum_{i=1}^{n}&space;(X_i&space;-&space;\bar{X})&space;(Y_i&space;-&space;\bar{Y})}{\sqrt{\sum_{i=1}^{n}&space;(X_i&space;-&space;\bar{X})^2}&space;\sqrt{\sum_{i=1}^{n}&space;(Y_i&space;-&space;\bar{Y})^2}})
+![Pearson correlation coefficient formula](https://latex.codecogs.com/png.latex?\dpi{300}&space;\bg_white&space;\color{white}&space;r&space;=&space;\frac{\sum_{i=1}^{n}&space;(X_i&space;-&space;\bar{X})&space;(Y_i&space;-&space;\bar{Y})}{\sqrt{\sum_{i=1}^{n}&space;(X_i&space;-&space;\bar{X})^2}&space;\sqrt{\sum_{i=1}^{n}&space;(Y_i&space;-&space;\bar{Y})^2}})
 
 - X : The first vector.
 - Y : The second vector.
