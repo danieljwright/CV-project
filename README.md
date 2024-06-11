@@ -59,6 +59,22 @@ Where:
 
 We obtained the average similarity scores for 10 iterations for each of the 10 filters in the model. These are shown below in Table 1. 
 
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{lc}
+        \toprule
+        \textbf{Method} & \textbf{Average Accuracy (\%)} \\
+        \midrule
+        Cosine similarity & 91.143 \\
+        Average random init & 94.625 \\
+        Pearson coefficient & 94.09 \\
+        Frobenius norm & 92.843 \\
+        \bottomrule
+    \end{tabular}
+    \caption{Comparison of average accuracies for different methods}
+    \label{tab:average_accuracies}
+\end{table}
+
 The model warm-started using the Pearson similarity metric performed the best, with an average test accuracy similar to that of the model that was randomly initalised. The average test accuracy of the warm-started model trained for each similarity metric and the average test accuracy of the randomly intialised model, are shown in Table 2.
 
 ## 4. Discussion
