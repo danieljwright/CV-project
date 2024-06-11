@@ -35,8 +35,8 @@ where x<sub>1</sub> and x<sub>2</sub> are the flattened vectors.
 ![Frobenius Norm](https://latex.codecogs.com/png.latex?\dpi{110}\color{white}%5C%7CA%20-%20B%5C%7C_F%20%3D%20%5Csqrt%7B%5Csum_%7Bi%3D1%7D%5Em%20%5Csum_%7Bj%3D1%7D%5En%20%7Ca_%7Bij%7D%20-%20b_%7Bij%7D%7C%5E2%7D)
 
 Where:
-- \( A \) and \( B \) are m*n (28*28) matrices.
-- \( a_{ij} \) and \( b_{ij} \) are the elements in the \( i \)-th row and \( j \)-th column of \( A \) and \( B \), respectively.
+- A and B are m*n (28*28) matrices.
+- a<sub>ij</sub> and b<sub>ij</sub> are the elements in the i-th row and j-th column of A and B, respectively.
 
 
 
