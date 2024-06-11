@@ -28,9 +28,11 @@ We then define a simple Convolutional Neural Network, which will train on all of
 
 
 
-## 5. Results
+## 3. Results
 
-With fixed noise levels: 20x runs with the three different similarity measures, record train_loss and test accuracy. calculate average and std dev. Also record similarity scores somehow??
+We obtained the average similarity scores for 10 iterations for each of the 10 filters in the model. These are shown below in Table 1. 
 
-Calculate similarity between random and final, and then intial warm start and final warm start and compare the result.
+The model warm-started using the Pearson similarity metric performed the best, with an average test accuracy similar to that of the model that was randomly initalised. The average test accuracy of the warm-started model trained for each similarity metric and the average test accuracy of the randomly intialised model, are shown in Table 2.
+
+
 
