@@ -27,7 +27,10 @@ We then define a simple Convolutional Neural Network, which will train on all of
 
 The three similarity metrics that we use to compare filters across our six different models are as follows : 
 
-1) Cosine Similarity : 
+1) Cosine Similarity : We flatten the two filters to be compared so that they become one dimensional vectors and then compute the cosine similarity between them using torch.nn.functional.cosine_similarity() which emplys the following formula, \[
+\text{similarity} = \frac{x_1 \cdot x_2}{\max(\|x_1\|_2, \epsilon) \cdot \max(\|x_2\|_2, \epsilon)}
+\] 
+where x_1 and x_2 are the flattened vectors.
 2) 
 
 
