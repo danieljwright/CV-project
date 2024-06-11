@@ -59,7 +59,26 @@ Where:
 
 We obtained the average similarity scores for 10 iterations for each of the 10 filters in the model. These are shown below in Table 1. 
 
-### Table 1: Average Test Accuracy
+### Table 3: Average Similarity Scores
+
+| Metric                         | Filter 1   | Filter 2   | Filter 3   | Filter 4   | Filter 5   | Filter 6   | Filter 7   | Filter 8   | Filter 9   | Filter 10  |
+|--------------------------------|------------|------------|------------|------------|------------|------------|------------|------------|------------|------------|
+| **Cosine similarity**          |            |            |            |            |            |            |            |            |            |            |
+| Avg                            | 0.31619102 | 0.39206314 | 0.32767773 | 0.33037522 | 0.32841057 | 0.3435595  | 0.3361762  | 0.37068677 | 0.32395244 | 0.31451932 |
+| Std                            | 0.25814608 | 0.27347025 | 0.23110147 | 0.22741994 | 0.21829844 | 0.22780581 | 0.21624844 | 0.24406238 | 0.22018431 | 0.22252244 |
+| **Pearson coefficient**        |            |            |            |            |            |            |            |            |            |            |
+| Avg                            | 0.34174002 | 0.37455269 | 0.3160879  | 0.29002075 | 0.31419466 | 0.31730315 | 0.37767744 | 0.34377837 | 0.3730682  | 0.35122528 |
+| Std                            | 0.234311   | 0.25126004 | 0.21325038 | 0.20954852 | 0.20930642 | 0.22417264 | 0.2118101  | 0.21775986 | 0.25721901 | 0.24133763 |
+| **Frobenius norm**             |            |            |            |            |            |            |            |            |            |            |
+| Avg                            | 1.7596636  | 1.6536038  | 1.1763726  | 1.2730144  | 1.2649969  | 1.3172685  | 1.2530814  | 1.1828452  | 1.1642699  | 1.2038964  |
+| Std                            | 0.47468022 | 0.41801614 | 0.3258538  | 0.37116513 | 0.33728537 | 0.35514113 | 0.32381335 | 0.3204852  | 0.33116174 | 0.35387298 |
+
+
+
+
+The model warm-started using the Pearson similarity metric performed the best, with an average test accuracy similar to that of the model that was randomly initalised. The average test accuracy of the warm-started model trained for each similarity metric and the average test accuracy of the randomly intialised model, are shown in Table 2.
+
+### Table 2: Average Test Accuracy
 
 | Method                  | Average Accuracy (%) |
 |-------------------------|----------------------|
@@ -67,9 +86,6 @@ We obtained the average similarity scores for 10 iterations for each of the 10 f
 | Frobenius norm          |   92.843             |
 | Pearson coefficient     | 94.09                |
 | Random initialisation   | 94.62                |
-
-
-The model warm-started using the Pearson similarity metric performed the best, with an average test accuracy similar to that of the model that was randomly initalised. The average test accuracy of the warm-started model trained for each similarity metric and the average test accuracy of the randomly intialised model, are shown in Table 2.
 
 ## 4. Discussion
 
