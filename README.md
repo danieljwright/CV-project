@@ -39,5 +39,11 @@ We obtained the average similarity scores for 10 iterations for each of the 10 f
 
 The model warm-started using the Pearson similarity metric performed the best, with an average test accuracy similar to that of the model that was randomly initalised. The average test accuracy of the warm-started model trained for each similarity metric and the average test accuracy of the randomly intialised model, are shown in Table 2.
 
+## 4. Discussion
+
+Do these six models trained on the noisy datasets converge to similar learned weights?
+
+If we use these learned weights to warm-start a network on a dataset which includes all the different noises/artifacts does it perform better in terms of classification accuracy than random initialization?
+
 
 
