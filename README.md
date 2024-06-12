@@ -49,8 +49,8 @@ Where:
 - Y : The second vector.
 - X<sub>i</sub> : The i-th element in the vector X.
 - Y<sub>i</sub> : The i-th element in the vector Y.
-- ![X bar](https://latex.codecogs.com/png.latex?\dpi{100}&space;\bar{X}): The mean of vector X.
-- ![Y bar](https://latex.codecogs.com/png.latex?\dpi{100}&space;\bar{Y}): The mean of vector Y.
+- ![X bar](https://latex.codecogs.com/png.latex?\dpi{100}&space;\color{white}&space;\bar{X}): The mean of vector X.
+- ![Y bar](https://latex.codecogs.com/png.latex?\dpi{100}&space;\color{white}&space;\bar{Y}): The mean of vector Y.
 - n : The number of elements (length) of the vectors X and Y.
 
 
