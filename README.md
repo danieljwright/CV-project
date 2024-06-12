@@ -11,15 +11,15 @@ As the applications of computer vision have grown and deep learning models have 
 
 We first shuffle the MNIST training dataset, which consists of 60000 images. We then take 6 different subsets of this shuffled dataset, with 10000 images in each subset, and apply a different noise to each of these subsets.
 
-1) The noise that we apply to the first subset is a random perspective transform on each input image, using torchvision.transforms.v2.RandomPerspective(). We set the probability of an image being transformed as 1, as we want all images to be transformed. The degree of distortion is set to 0.6, and the fill value is set to -1, so areas outside the transformed image are filled using the edge pixel value. An example of such a transformation is shown in the image below.
+1) The noise that we apply to the first subset is a random perspective transform on each input image, using torchvision.transforms.v2.RandomPerspective(). We set the probability of an image being transformed as 1, as we want all images to be transformed. The degree of distortion is set to 0.3, and the fill value is set to -1, so areas outside the transformed image are filled using the edge pixel value. An example of such a transformation is shown in the image below.
 
-2) For the second subset, we apply random gaussian blur to each image, using torchvision.transforms.v2.GaussianBlur(), using a gaussian kernel os size 5, and a standard deviation uniformly chosen from the range (1, 5) for creating the kernel that will do the blurring.
+2) For the second subset, we apply random gaussian blur to each image, using torchvision.transforms.v2.GaussianBlur(), using a gaussian kernel os size 5, and a standard deviation uniformly chosen from the range (1, 2) for creating the kernel that will do the blurring.
 
-3) For the third subset, for each image, we create a 28*28 array where all values are sampled from a Gaussian distribution with mean 0 and standard deviation 1, and we add this gaussian noise to the image.
+3) For the third subset, for each image, we create a 28*28 array where all values are sampled from a Gaussian distribution with mean 0 and standard deviation 0.5, and we add this gaussian noise to the image.
 
 4) For the fourth subset, we randomly erase a rectangular region from the images with probability 0.5, using torchvision.transforms.v2.RandomErasing(), with an erasing value of -1.
 
-5) For the fifth subset, we perform an elastic transform on the images, using torchvision.transforms.v2.ElasticTransform(), taking magnitude of displacements as 125.
+5) For the fifth subset, we perform an elastic transform on the images, using torchvision.transforms.v2.ElasticTransform(), taking magnitude of displacements as 50.
 
 6) Finally, for the sixth subset, we randomly rotate the images using torchvision.transforms.v2.RandomRotation() upto 30 degrees.
 
@@ -32,6 +32,7 @@ The three similarity metrics that we use to compare filters across our six diffe
 ![similarity](https://latex.codecogs.com/png.latex?\dpi{150}\color{white}%20\text{similarity}%20=%20\frac{x_1%20\cdot%20x_2}{\max(%7C%7Cx_1%7C%7C_2,%20\epsilon)%20\cdot%20\max(%7C%7Cx_2%7C%7C_2,%20\epsilon)})
 
 where x<sub>1</sub> and x<sub>2</sub> are the flattened vectors.
+A score of -1 represents oppositely pointing vectors, while a score of 1 means that the vectors have the same orientation and direction. A score of 0 represents orthogonal vectors. We return the absolute value of cosine similarity, as we believe that oppositely pointing vectors represent a case where the filters are trying to learn the same concept in opposite manners to each other in space, and hence essentially, they are similar.
 
 2) Frobenius Norm : We take two matrices corresponding to the two filters and subtract one from the other, and take the frobenius norm of the resulting matrix, using numpy.linalg.norm(). setting order = 'fro'. It is computed as follows,
 
@@ -40,6 +41,7 @@ where x<sub>1</sub> and x<sub>2</sub> are the flattened vectors.
 Where:
 - A and B are mxn (28x28) matrices.
 - a<sub>ij</sub> and b<sub>ij</sub> are the elements in the i-th row and j-th column of A and B, respectively.
+The frobenius norm can range from 0 to &infin;, with a score closer to 0 implying more similarity between the filters.
 
 3) Pearson Correlation Coefficient : We flatten the two filters into 1-D vectors and then find the Pearson Correlation Coefficient between them, using numpy.corrcoef(), using the given formula,
 
@@ -52,6 +54,7 @@ Where:
 - ![X bar](https://latex.codecogs.com/png.latex?\dpi{100}&space;\color{white}&space;\bar{X}): The mean of vector X.
 - ![Y bar](https://latex.codecogs.com/png.latex?\dpi{100}&space;\color{white}&space;\bar{Y}): The mean of vector Y.
 - n : The number of elements (length) of the vectors X and Y.
+A score of -1 implies perfect positive linear relationship, while a score of -1 implies a score of perfect negative linear relationship. A score of 0 implies that there is no linear relationship between the two filters. SImilarly to the cosine similarity case, we return the absolute value of the pearson correlation coefficent, for the same reasons.
 
 We have 8 convolutional filters in our model architecture in total, and after training our model separately on the 6 noisy datasets, we obtain, for each filter, its pairwise similarity across all the 6 models. For example, for filter 1, we obtain its pairwise similarity for the following pairs of models : { (1, 2), (1, 3), (1,4), (1, 5), (1, 6), (2, 3), (2, 4), (2, 5), (2, 6), (3, 4), (3, 5), (3, 6), (4, 5), (4, 6), (5, 6) }. We take the pair with the maximum similarity, and randomly select one filter from the pair. For our final warm-started model, which will be trained on the entire noiseless dataset with 60000 images, we initialize each convolutional filter with the corresponding selected filter. Note that we are not initializing biases, and we are only initializing convoulutional filters, not the parameters of the fully connected layers.
 
