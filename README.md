@@ -89,12 +89,12 @@ The model warm-started using the Pearson similarity metric performed the best, w
 
 ### Table 2: Average Test Accuracy
 
-| Method                  | Average Accuracy (%) |
-|-------------------------|----------------------|
-| Cosine similarity       | 91.143               |
-| Frobenius norm          |   92.843             |
-| Pearson coefficient     | 94.09                |
-| Random initialisation   | 94.62                |
+| Method                  | Average Accuracy (%) | Standard Deviation | Max Accuracy|
+|-------------------------|----------------------| ------------------ |-------------|
+| Cosine similarity       | 91.143               |5.329               | 94.98       |
+| Frobenius norm          | 92.843               |3.113               | 95.44       |
+| Pearson coefficient     | 94.09                |7.624               | 94.83       |
+| Random initialisation   | 94.62                |1.865               | 95.9        |
 
 ## 4. Discussion
 
