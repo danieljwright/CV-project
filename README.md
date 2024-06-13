@@ -31,7 +31,7 @@ We then define a simple Convolutional Neural Network, which will train on all of
 
 We have a deliberately chosen a very simple CNN, and a simple greyscale dataset, as we can scale up the network and dataset complexity in case of positive results with a simpler dataset and network, and as it is wise in the interest of energy efficiency to initially do a scaled down version of this research. Also, it is not so hard to achieve more than 99% test accuracy for MNIST with more complex networks, so we choose to use a simple network so we can observe if there are any gains using our similarity-based warm started network. 
 
-To find the most similar filters we need a measure for similarity between two filters. We found that three similarity metrics, namely matrix norm, pearson correlation coefficient, and cosine similarity have been used in the past to compare weights of fully connected networks or CNNS. We use all of these methods as required in our context to compare if one method performs better than the others.
+To find the most similar filters we need a measure for similarity between two filters. We found that three similarity metrics, namely matrix norm, pearson correlation coefficient, and cosine similarity have been used in the past to compare weights of fully connected networks or CNNs. We use all of these methods as required in our context to compare if one method performs better than the others.
 
 1) Cosine Similarity : We flatten the two filters to be compared so that they become one dimensional vectors and then compute the cosine similarity between them using torch.nn.functional.cosine_similarity() as follows,
 
