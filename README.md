@@ -1,7 +1,7 @@
 # CNN Similarity and Warm-Starting Ability
 Authors: Daniel Wright (5932033) & Kunal Kaushik (6050549) & Alex
 
-In this blog post we present the results of our study into whether CNN's learn similar filters and if these learned weights can be used to warm start a model. This work is part of the course CS4245 Computer Vision by Deep Learning in 2023/2024 at TU Delft. 
+In this blog post we present the results of our study into whether training a CNN on a dataset can be warm started using convolutional filters that are found to be similar after training the same CNN across different noisy subsets of the original dataset, to potentially achieve better generalization accuracy than simply randomly initializing the filters for training. This work is part of the course CS4245 Computer Vision by Deep Learning in 2023/2024 at TU Delft. 
 
 ## 1. Introduction
 
