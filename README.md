@@ -5,7 +5,7 @@ In this blog post we present the results of our study into whether training a CN
 
 ## 1. Introduction
 
-As the applications of computer vision have grown and deep learning models have become more ubiqitous, the environmental impact of training these models becomes apparent. One solution to the water usage and carbon emissions of training models is to use warm-starting. This is the process of initalising model weights using weights from previously trained models, instead of random initialisation. Prior work has shown that warm starting neural networks can harm generalization, with a "shrink and perturb" trick being applied to warm started weights to try and help warm started networks perform better. We explore warm starting in a different context to the methods utilized before. Our idea is to train a simple Convolutional Neural Network (CNN) on 6 different noisy subsets of the MNIST Dataset, which is a dataset of greyscale images of size 28*28 of the numbers 0-9. The final convolutional filters that we get from training the model on these noisy datasets are compared for similarities, and then we use filters that are similar across different models to warm-start the same Convolutional Neural Network on the entire MNIST dataset, to see if we can get better accuracy on the MNIST test dataset compared to simply training our Convolutional Neural Network with random initializtion on the entire MNIST dataset.
+As the applications of computer vision have grown and deep learning models have become more ubiqitous, the environmental impact of training these models becomes apparent. One solution to the water usage and carbon emissions of training models is to use warm-starting. This is the process of initalising model weights using weights from previously trained models, instead of random initialisation. Prior work has shown that warm starting neural networks can harm generalization, for example, in the case when weights learned from training on 50% of the data are used to initialize training on the entire dataset [1]. We explore warm starting in a different context to the methods utilized before. Our idea is to train a simple Convolutional Neural Network (CNN) on 6 different noisy subsets of the MNIST Dataset, which together comprise the entire dataset, which is a dataset of greyscale images of size 28*28 of the numbers 0-9. The final convolutional filters that we get from training the model on these noisy datasets are compared for similarities, and then we use filters that are similar across different models to warm-start the same Convolutional Neural Network on the entire MNIST dataset, to see if we can get better accuracy on the MNIST test dataset compared to simply training our Convolutional Neural Network with random initializtion on the entire MNIST dataset.
 
 ## 2. Methodology
 
@@ -69,7 +69,7 @@ We have 8 convolutional filters in our model architecture in total, and after tr
 
 ## 3. Results
 
-We obtained the average similarity scores for 10 iterations for each of the 10 filters in the model. These are shown below in Table 1. 
+We obtained the average similarity scores over 20 iterations for each of the 10 filters in the model across the six noisy datasets. These are the averages of the pairwise similarities for each filter across all the six datasets over 20 iterations. These are shown below in Table 1. 
 
 ### Table 1: Average Similarity Scores
 
@@ -85,12 +85,27 @@ We obtained the average similarity scores for 10 iterations for each of the 10 f
 | Avg                            | 1.7596636  | 1.6536038  | 1.1763726  | 1.2730144  | 1.2649969  | 1.3172685  | 1.2530814  | 1.1828452  | 1.1642699  | 1.2038964  |
 | Std                            | 0.47468022 | 0.41801614 | 0.3258538  | 0.37116513 | 0.33728537 | 0.35514113 | 0.32381335 | 0.3204852  | 0.33116174 | 0.35387298 |
 
+On average, each filter across the six noisy datasets is only somewhat similar, as can be seen in the results, meaning that it is hard to find a filter that is similar for all the noisy datasets. However, for a given filter, for certain pairs of noisy datasets, the similarity is more. For example, over all filters, the maximum similarity we found for any filter for any two datasets using the different similarity metrics was as follows : 
 
+1) Cosine Similarity : 0.94
+2) Pearson Correlation Coefficient : 0.95
+3) Frobenius Norm : 0.34 (The lesser the better)
 
+Hence, there do exist pairs for a given filter across certain noisy datasets that are quite similar, which we believe can help us warm start our network. We believe that certain pairs of noises make it more conducive to learn similar noise-invariant filters than the others. For the 20 trials, we looked at the most commonly selected pair of models for each similarity metric, across all the filters. This is shown in Table 2.
 
-The model warm-started using the Pearson similarity metric performed the best, with an average test accuracy similar to that of the model that was randomly initalised. The average test accuracy of the warm-started model trained for each similarity metric and the average test accuracy of the randomly intialised model, are shown in Table 2.
+### Table 2: Most Commonly Selected pair
 
-### Table 2: Average Test Accuracy
+| Metric             | Pair of models | Mode Count |
+|--------------------|----------------|------------|
+| Cosine Similarity  | 1,5            | 33         |
+| Pearson Coefficient| 2,5            | 25         |
+| Frobenius Norm     | 3,4            | 30         |
+
+Hence, using cosine similarity, across all filters, a filter was found to be most similar most often when comparing between models trained on the datasets with random perspective and elastic transformations applied to them, respectively. For Pearson correlation coefficient, the datasets were those corresponding to gaussian blur and elastic transform, and for frobenius norm, the datasets corresponded to gaussian noise and random erasing. We speculate that for datasets with perspective and elastic transformations applied to them, there is a set of noise-invariant filters that have high cosine similarity (which essentially means that the filters when flattened, represent similar vectors in terms of orientation and direction),
+
+The model warm-started using the Pearson similarity metric performed the best, with an average test accuracy similar to that of the model that was randomly initalised. The average test accuracy of the warm-started model trained for each similarity metric and the average test accuracy of the randomly intialised model, are shown in Table 3.
+
+### Table 3: Average Test Classification Accuracy
 
 | Metric                          | Average Accuracy | Standard Deviation | Max Accuracy |
 |---------------------------------|------------------|--------------------|--------------|
@@ -99,16 +114,10 @@ The model warm-started using the Pearson similarity metric performed the best, w
 | Pearson Coefficient             | 91.8830          | 4.9802             | 95.29        |
 | Frobenius Norm                  | 90.8165          | 3.4740             | 94.76        |
 
+Hence, our method unfortunately does not manage to outperform random initialisation, no matter what similarity metric we choose to select similar filters. Random initialization, over many trials gives much less standard deviation over the test accuracies, a higher maximum test accuracy, and also a higher average test accuracy than our method. Hence, it consistently generalizes better than our method, and also is more robust in terms of range of test classification accuracies. We suspect that our method requires comparison between even more types of noisy datasets to find filters that are even more noise-invariant, and it is very hard to make multiple datasets while exhausting all types of possible noises. The fact that we ony warm-start the convolutional filters might have made our method unstable as well, and warm starting the biases and the parameters of the fully connected layer might be useful. We also do not compare each filter with every filter across all other models, comparing a filter only to its corresponding filter across the other models. Doing a more thorough comparison might result in a selection of more noise-invariant filters. It might also be possible that filters that learn the same thing might appear at different locations for the different models that we train over the six noisy datasets. It might be that our selection procedure for each of the ten filters for our CNN results in roughly the same filter being selected at different locations for warm starting, which can harm generalization. Also, even though our selected filters are noise-invariant, they might still be biased to perform slightly better on the noisy datasets they were trained on. Hence, in the current state in which our method is used, a random initialization of weights still results in better test classification accuracy. Although our method is different to what was done in [1] as mentioned before, we are still unable to achieve positive results.
 
-For the 20 trials we also looked at the most commonly selected pair of models for each similarity metric, across all the filters. This is shown in Table 3.
+For our method, using pearson correlation coefficient as the similarity metric resulted in highest average test classification accuracy, while frobenius norm resulted in the most consistent and robust classification test accuracies, having the least standard deviation of the test classification accuracies. Using cosine similarity was particularly bad, resulting in the most inconsistent and least accurate classifications. This leads us to believe that simply flattening filters and comparing the resulting vetors' direction and orientation is not a sufficiently good metric of similarity between filters, and if cosine similarity is to be used, it needs to be done in a more suitable way. However, we do not at the moment know if there is a more suitable way. It might be possible to take the similarity row-wise or column wise, and take an average of all the similarities. However, we suspect that even doing that will not particularly increase performance. Surprisingly, pearson correlation coefficient, which also computes the similarity after flattening the filters, seems to be a more apt similarity measure for the filters. It leads to an interesting insight that linear relationships between filters might be a suitable measure of similarity between them, meaning that more than the magnitudes, the trend of increase or decrease in a filter's values, when viewed as a vector, can give a better understanding of what a filter is doing. Also, simply taking the frobenius norm of the difference of two filters is quite intuitive, as it represents the average distance between the corresponding elements, and it results in the most consistent performance, but still, unfortunately, it is not close to random initialisation.
 
-### Table 3: Most Commonly Selected pair
-
-| Metric             | Pair of models | Mode Count |
-|--------------------|----------------|------------|
-| Cosine Similarity  | 1,5            | 33         |
-| Pearson Coefficient| 2,5            | 25         |
-| Frobenius Norm     | 3,4            | 30         |
 
 We also compared the chosen weights for the warm-started model with the final weights after the fine-tuning with the three similarity measures. The average similarity is shown in Table 4.
 
