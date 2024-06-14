@@ -15,7 +15,7 @@ We first shuffle the MNIST training dataset, which consists of 60000 images. We 
 
 2) For the second subset, we apply random gaussian blur to each image, using torchvision.transforms.v2.GaussianBlur(), using a gaussian kernel os size 5, and a standard deviation uniformly chosen from the range (1, 2) for creating the kernel that will do the blurring. This approximates an image being taken with a lower quality camera, or the image being taken at a distance.
 
-3) For the third subset, for each image, we create a 28*28 array where all values are sampled from a Gaussian distribution with mean 0 and standard deviation 0.5, and we add this gaussian noise to the image. This is a catch-all transformation to mimic general noise that can occur in image. 
+3) For the third subset, for each image, we create a 28*28 array where all values are sampled from a Gaussian distribution with mean 0 and standard deviation 0.5, and we add this gaussian noise to the image. This imitiates a brighter image, with overall higher pixel values.
 
 4) For the fourth subset, we randomly erase a rectangular region from the images with probability 0.5, using torchvision.transforms.v2.RandomErasing(), with an erasing value of -1. This approximates the digit being partially occluded.
 
