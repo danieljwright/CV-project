@@ -31,7 +31,7 @@ We then define a simple Convolutional Neural Network, which will train on all of
 
 We have a deliberately chosen a very simple CNN, and a simple greyscale dataset, as we can scale up the network and dataset complexity in case of positive results with a simpler dataset and network, and as it is wise in the interest of energy efficiency to initially do a scaled down version of this research. Also, it is not so hard to achieve more than 99% test accuracy for MNIST with more complex networks, so we choose to use a simple network so we can observe if there are any gains using our similarity-based warm started network. 
 
-To find the most similar filters we need a measure for similarity between two filters. We found that three similarity metrics, namely matrix norm, pearson correlation coefficient, and cosine similarity have been used in the past to compare weights of fully connected networks or CNNs. We use all of these methods as required in our context to compare if one method performs better than the others.
+To find the most similar filters we need a measure for similarity between two filters. We found that three similarity metrics, namely matrix norm, pearson correlation coefficient, and cosine similarity have been used in the past to compare weights of fully connected networks or CNNs [2][3][4]. We use all of these methods as required in our context to compare if one method performs better than the others.
 
 1) Cosine Similarity : We flatten the two filters to be compared so that they become one dimensional vectors and then compute the cosine similarity between them using torch.nn.functional.cosine_similarity() as follows,
 
@@ -67,7 +67,7 @@ A score of -1 implies perfect positive linear relationship, while a score of -1 
 
 We have 8 convolutional filters in our model architecture in total, and after training our model separately on the 6 noisy datasets, we obtain, for each filter, its pairwise similarity across all the 6 models. For example, for filter 1, we obtain its pairwise similarity for the following pairs of models : { (1, 2), (1, 3), (1,4), (1, 5), (1, 6), (2, 3), (2, 4), (2, 5), (2, 6), (3, 4), (3, 5), (3, 6), (4, 5), (4, 6), (5, 6) }. We take the pair with the maximum similarity, and randomly select one filter from the pair. For our final warm-started model, which will be trained on the entire noiseless dataset with 60000 images, we initialize each convolutional filter with the corresponding selected filter. We believe that finding the pair with maximum similarity represents a scenario where almost the same filter has been learned for two datasets with different noises applied, which would imply that the filter is noise invariant. We also hypothesize that randomly selecting a filter from the pair with maximum similarity preserves the structural integrity of a filter, while averaging the two filters might result in a less robust filter. Note that we are not initializing biases, and we are only initializing convoulutional filters, not the parameters of the fully connected layers. 
 
-## 3. Results
+## 3. Results and Discussion
 
 We obtained the average similarity scores over 20 iterations for each of the 10 filters in the model across the six noisy datasets. These are the averages of the pairwise similarities for each filter across all the six datasets over 20 iterations. These are shown below in Table 1. 
 
@@ -130,6 +130,7 @@ We also compared the chosen weights for the warm-started model with the final we
 | Pearson Coefficient  | 0.930              | 
 | Frobenius Norm       | 0.929              | 
 
+In [1], the authors found that there are instances where warm starting performs as well as random initialization, but in those cases, the weights by the end of training were not similar to the ones as the warm started weights at the beginning of training. Hence, these warm started models were essentially forgetting their warm started weights, making the warm starting procedure pointless. We agree with this observation through our results, as we observe that the reference average similarity between randomly initialised and converged convolutional filters is less than the average similarity between the warm started and converged convolutional filters for our method, using any similarity metric. Hence, our warm started filters are not "forgotten", which hurts classification performance on the test dataset. Using a different set of hyperparameters might have helped our method "forget" the warm started weights, but that makes the enitre excercise pointless.
 
 ![WhatsApp Image 2024-06-14 at 14 15 43_ac876346](https://github.com/danieljwright/CV-project/assets/52325405/19b2b7ca-7122-41fe-96ed-c95524421624)
 ![WhatsApp Image 2024-06-14 at 14 17 20_23409c29](https://github.com/danieljwright/CV-project/assets/52325405/f8d1c2fa-ff05-44cc-b5b0-af8c9b13ec78)
@@ -138,11 +139,15 @@ We also compared the chosen weights for the warm-started model with the final we
 ![WhatsApp Image 2024-06-14 at 14 18 36_95c67a36](https://github.com/danieljwright/CV-project/assets/52325405/392618f0-6afc-4025-aa34-6bfaf44fb8b8)
 ![WhatsApp Image 2024-06-14 at 14 18 49_fadade7e](https://github.com/danieljwright/CV-project/assets/52325405/2a1378b1-8ce6-4931-9483-fed391914f76)
 
-## 4. Discussion
+## 4. Conclusion
 
-Do these six models trained on the noisy datasets converge to similar learned weights?
+We tried to improve generalization performance over random initialisation using a novel warm starting method for training a CNN. Warm starting has been known to negatively impact generalization ability of a network in the past, however, we believed that warm starting a CNN for a classification task based on noise-invariant trained convolutional filters that are similar across training on different noisy datasets for the same classification task could prove an effective method. Unfortunately, warm starting based on this method also proved ineffective, and hence, as of now, random initialisation remains an appropriate method to train networks.
 
-If we use these learned weights to warm-start a network on a dataset which includes all the different noises/artifacts does it perform better in terms of classification accuracy than random initialization?
+## 5. References
+[1] Ash, Jordan, and Ryan P. Adams. "On warm-starting neural network training." Advances in neural information processing systems 33 (2020): 3884-3894.
 
+[2] Srinivas, Suraj, and R. Venkatesh Babu. “Data-free parameter pruning for deep neural networks.” arXiv preprint arXiv:1507.06149 (2015).
 
+[3] Shang, Wenling, et al. “Understanding and improving convolutional neural networks via concatenated rectified linear units.” international conference on machine learning. 2016.
 
+[4] Roy-Chowdhury, Aruni, et al. “Reducing duplicate filters in deep neural networks.” NIPS workshop on Deep Learning: Bridging Theory and Practice. Vol. 1. 2017.
