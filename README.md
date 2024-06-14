@@ -131,7 +131,12 @@ We also compared the chosen weights for the warm-started model with the final we
 | Frobenius Norm       | 0.929              | 
 
 
-
+![WhatsApp Image 2024-06-14 at 14 15 43_ac876346](https://github.com/danieljwright/CV-project/assets/52325405/19b2b7ca-7122-41fe-96ed-c95524421624)
+![WhatsApp Image 2024-06-14 at 14 17 20_23409c29](https://github.com/danieljwright/CV-project/assets/52325405/f8d1c2fa-ff05-44cc-b5b0-af8c9b13ec78)
+![WhatsApp Image 2024-06-14 at 14 17 58_5c0735df](https://github.com/danieljwright/CV-project/assets/52325405/b582490d-e8c1-42b9-8929-1abea8ca5c57)
+![WhatsApp Image 2024-06-14 at 14 18 25_d17145f0](https://github.com/danieljwright/CV-project/assets/52325405/95ec259c-f9b2-4f85-9d27-9a8b673d608f)
+![WhatsApp Image 2024-06-14 at 14 18 36_95c67a36](https://github.com/danieljwright/CV-project/assets/52325405/392618f0-6afc-4025-aa34-6bfaf44fb8b8)
+![WhatsApp Image 2024-06-14 at 14 18 49_fadade7e](https://github.com/danieljwright/CV-project/assets/52325405/2a1378b1-8ce6-4931-9483-fed391914f76)
 
 ## 4. Discussion
 
