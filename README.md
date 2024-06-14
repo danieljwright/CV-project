@@ -71,7 +71,7 @@ We have 8 convolutional filters in our model architecture in total, and after tr
 
 We obtained the average similarity scores for 10 iterations for each of the 10 filters in the model. These are shown below in Table 1. 
 
-### Table 3: Average Similarity Scores
+### Table 1: Average Similarity Scores
 
 | Metric                         | Filter 1   | Filter 2   | Filter 3   | Filter 4   | Filter 5   | Filter 6   | Filter 7   | Filter 8   | Filter 9   | Filter 10  |
 |--------------------------------|------------|------------|------------|------------|------------|------------|------------|------------|------------|------------|
@@ -92,12 +92,37 @@ The model warm-started using the Pearson similarity metric performed the best, w
 
 ### Table 2: Average Test Accuracy
 
-| Method                  | Average Accuracy (%) | Standard Deviation | Max Accuracy|
-|-------------------------|----------------------| ------------------ |-------------|
-| Cosine similarity       | 91.143               |5.329               | 94.98       |
-| Frobenius norm          | 92.843               |3.113               | 95.44       |
-| Pearson coefficient     | 94.09                |7.624               | 94.83       |
-| Random initialisation   | 94.62                |1.865               | 95.9        |
+| Metric                          | Average Accuracy | Standard Deviation | Max Accuracy |
+|---------------------------------|------------------|--------------------|--------------|
+| Cosine Similarity               | 90.2295          | 8.3578             | 95.11        |
+| Random Init                     | 94.057           | 1.6521             | 95.68        |
+| Pearson Coefficient             | 91.8830          | 4.9802             | 95.29        |
+| Frobenius Norm                  | 90.8165          | 3.4740             | 94.76        |
+
+
+For the 20 trials we also looked at the most commonly selected pair of models for each similarity metric, across all the filters. This is shown in Table 3.
+
+### Table 3: Most Commonly Selected pair
+
+| Metric             | Pair of models | Mode Count |
+|--------------------|----------------|------------|
+| Cosine Similarity  | 1,5            | 33         |
+| Pearson Coefficient| 2,5            | 25         |
+| Frobenius Norm     | 3,4            | 30         |
+
+We also compared the chosen weights for the warm-started model with the final weights after the fine-tuning with the three similarity measures. The average similarity is shown in Table 4.
+
+### Table 4: Change in warm-started weights
+
+| Metric               | Average Similarity |
+|----------------------|--------------------|
+| Random Initialisation| 0.709              |
+| Cosine Similarity    | 0.954              | 
+| Pearson Coefficient  | 0.930              | 
+| Frobenius Norm       | 0.929              | 
+
+
+
 
 ## 4. Discussion
 
