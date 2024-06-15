@@ -68,7 +68,7 @@ A score of -1 implies perfect positive linear relationship, while a score of -1 
 We have 10 convolutional filters in our model architecture in total, and after training our model separately on the 6 noisy datasets, we obtain, for each filter, its pairwise similarity across all the 6 models. For example, for filter 1, we obtain its pairwise similarity for the following pairs of models : { (1, 2), (1, 3), (1,4), (1, 5), (1, 6), (2, 3), (2, 4), (2, 5), (2, 6), (3, 4), (3, 5), (3, 6), (4, 5), (4, 6), (5, 6) }. We take the pair with the maximum similarity, and randomly select one filter from the pair. For our final warm-started model, which will be trained on the entire noiseless dataset with 60000 images, we initialize each convolutional filter with the corresponding selected filter. We believe that finding the pair with maximum similarity represents a scenario where almost the same filter has been learned for two datasets with different noises applied, which would imply that the filter is noise invariant. We also hypothesize that randomly selecting a filter from the pair with maximum similarity preserves the structural integrity of a filter, while averaging the two filters might result in a less robust filter. Note that we are not warm-starting biases, nor the parameters of the fully connected layers. The model summary is displayed below.
 
 Model Summary
-----------------------------------------------------------------
+
         Layer (type)      |         Output Shape      |   Param #
 --------------------------|---------------------------|---------
             Conv2d-1      |     [-1, 2, 28, 28]       |      20
@@ -80,7 +80,8 @@ Model Summary
             Linear-7      |     [-1, 16]              |   3,152
               ReLU-8      |     [-1, 16]              |       0
             Linear-9      |     [-1, 10]              |      170
-----------------------------------------------------------------
+
+
 Total params: 3,418 |
 Trainable params: 3,418 |
 Non-trainable params: 0 |
