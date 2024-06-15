@@ -26,7 +26,8 @@ We first shuffle the MNIST training dataset, which consists of 60000 images. We 
 
 ![input](https://github.com/danieljwright/CV-project/assets/60939523/fa3ef1c3-cd13-4782-9b1f-44e2d41dcd6f)
 
-![input](https://github.com/danieljwright/CV-project/assests/main/transformation_pipeline.jpg)
+![Transformation Pipeline](https://github.com/danieljwright/CV-project/raw/main/transformation_pipeline.jpg)
+
 
 
 We then define a simple Convolutional Neural Network, which will train on all of these subsets separately, and the entire training dataset (without any noise) as well. Our CNN has two convolutional layers, the first one having 1 input channel and 2 output channels, and the second one having 2 input and 4 output channels, both having kernel sizes of 3, and stride and padding of 1. Both convolutional layers are followed by max pooling layers using a kernel size of 2, stride of 2, and a padding of 0. These are followed by two fully connected linear layers, with the last layer having 10 outputs corresponding to the 10 classes. We train this network across all datasets using the Adam optimizer using a learning rate of 0.001, a batch size of 64, for 6 epochs, and the loss function that is optimized is the Cross Entropy Loss. We then check for similarities between the trained filters to warm start training on the entire noiseless MNIST dataset using the most similar filters. We also train the same network on the entire dataset using randomly initialized weights, and compare the classiciation accuracy on the unseen test dataset for both methods. Both of these training procedures are run for 1 epoch. We believe that using trained filters that are found to be similar across different noisy datasets are noise-invariant and if training on a new and larger dataset is warm started using these noise invariant filters, the training procedure can be guided in optimal directions, helping the network generalize better.
