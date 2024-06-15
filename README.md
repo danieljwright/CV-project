@@ -120,6 +120,27 @@ Hence, there do exist pairs for a given filter across certain noisy datasets tha
 
 Hence, using cosine similarity, across all filters, a filter was found to be most similar most often when comparing between models trained on the datasets with random perspective and elastic transformations applied to them, respectively. For Pearson correlation coefficient, the datasets were those corresponding to gaussian blur and elastic transform, and for frobenius norm, the datasets corresponded to gaussian noise and random erasing. We speculate that for datasets with perspective and elastic transformations applied to them, there is a set of noise-invariant filters that have high similarity, as looking at an image from a different perspective might result in the image appearing elastically strecthed or compressed. Hence, it might be possible to represent a perspective transformation as an elastic transform. Blurring an image in some instances might also give an appearance to the image of being stretched in certain directions. Gaussian noise and random erasing, were the more "extreme" forms of noises, so to say, which might have lead to similar filters being learned in their case. Why different similarity measures select different pairs of models more frequently, however, is an open question.
 
+We have also included a comparison of the most similar filter and least similar filter found through each similarity measure. These are displayed in the heatmaps below. The first image shows two filters compared using the Cosine metric; one from a model trained on a dataset with gaussian blur and the other from a model trained on a dataset with additive gaussian noise. Qualitatively it appears that this filter is a horizontal edge detector. Edges would remain largely unchanged by these transformations and so are invariant, giving good performance on the test set. 
+![WhatsApp Image 2024-06-14 at 14 15 43_ac876346](https://github.com/danieljwright/CV-project/assets/52325405/19b2b7ca-7122-41fe-96ed-c95524421624)
+
+The second image shows the most dissimilar filters learned, measured with the Cosine metric. This compares two filters; one from a model trained on a dataset with the perspective transform and the other from a model trained with the random erase. These transforms are themselves dissimilar. 
+![WhatsApp Image 2024-06-14 at 14 17 20_23409c29](https://github.com/danieljwright/CV-project/assets/52325405/f8d1c2fa-ff05-44cc-b5b0-af8c9b13ec78)
+
+The third image shows the most similar filters learned, measured with the Pearson Correlation. Qualitatively, this appears to be a corner detector. The two filters were obtained from a model trained on the dataset with additive gaussian noise and a model trained on the dataset changed with the elastic transform. 
+![WhatsApp Image 2024-06-14 at 14 17 58_5c0735df](https://github.com/danieljwright/CV-project/assets/52325405/b582490d-e8c1-42b9-8929-1abea8ca5c57)
+
+The fourth image shows the most dissimilar filters learned, measured with the Person Correlation. This was obtained from a model trained on a dataset modified with the random erase, and a model trained on a dataset with the random rotate. 
+![WhatsApp Image 2024-06-14 at 14 18 25_d17145f0](https://github.com/danieljwright/CV-project/assets/52325405/95ec259c-f9b2-4f85-9d27-9a8b673d608f)
+
+The fifth image shows the most similar filters learned, measured with the Frobenius Norm. This was obtained from a model trained on a dataset with additive gaussian noise and a model trained on a dataset with random rotate applied. Qualitatively, this also appears to be an edge detector. 
+![WhatsApp Image 2024-06-14 at 14 18 36_95c67a36](https://github.com/danieljwright/CV-project/assets/52325405/392618f0-6afc-4025-aa34-6bfaf44fb8b8)
+
+The sixth image below shows the most dissimilar filters learned, measured iwth the Frobenius Norm. This was obtained from a model trained on a dataset with additive gaussian noise and a model trained on a dataset with random erase applied. 
+
+![WhatsApp Image 2024-06-14 at 14 18 49_fadade7e](https://github.com/danieljwright/CV-project/assets/52325405/2a1378b1-8ce6-4931-9483-fed391914f76)
+
+Qualitatively, it appears that the random erase leads to the most dissimilar filters being learned. We conjecture that this is because the CNN learns edge and corner detectors, which are features largely invariant to the other transformations applied, however they are not invariant to the erasure of the pixel values. Intuitively this corresponds with the inherent difficulty of performing object classification on an occluded object due to the relative lack of information. 
+
 
 The average test accuracy of the warm-started model trained for each similarity metric and the average test accuracy of the randomly intialised model, are shown in Table 3.
 
@@ -153,27 +174,6 @@ We also compared the chosen weights for the warm-started model (for each similar
 
 
 In [1], the authors found that there are instances where warm starting performs as well as random initialization, but in those cases, the weights by the end of training were not similar to the ones as the warm started weights at the beginning of training. Hence, these warm started models were essentially forgetting their warm started weights, making the warm starting procedure pointless. We agree with this observation through our results, as we observe that the reference average similarity between randomly initialised and converged convolutional filters is less than the average similarity between the warm started and converged convolutional filters for our method, using any similarity metric. Hence, our warm started filters are not "forgotten", which hurts classification performance on the test dataset. Using a different set of hyperparameters might have helped our method "forget" the warm started weights, but that makes the enitre excercise pointless.
-
-We have also included a comparison of the most similar filter and least similar filter found through each similarity measure. These are displayed in the heatmaps below. The first image shows two filters compared using the Cosine metric; one from a model trained on a dataset with gaussian blur and the other from a model trained on a dataset with additive gaussian noise. Qualitatively it appears that this filter is a horizontal edge detector. Edges would remain largely unchanged by these transformations and so are invariant, giving good performance on the test set. 
-![WhatsApp Image 2024-06-14 at 14 15 43_ac876346](https://github.com/danieljwright/CV-project/assets/52325405/19b2b7ca-7122-41fe-96ed-c95524421624)
-
-The second image shows the most dissimilar filters learned, measured with the Cosine metric. This compares two filters; one from a model trained on a dataset with the perspective transform and the other from a model trained with the random erase. These transforms are themselves dissimilar. 
-![WhatsApp Image 2024-06-14 at 14 17 20_23409c29](https://github.com/danieljwright/CV-project/assets/52325405/f8d1c2fa-ff05-44cc-b5b0-af8c9b13ec78)
-
-The third image shows the most similar filters learned, measured with the Pearson Correlation. Qualitatively, this appears to be a corner detector. The two filters were obtained from a model trained on the dataset with additive gaussian noise and a model trained on the dataset changed with the elastic transform. 
-![WhatsApp Image 2024-06-14 at 14 17 58_5c0735df](https://github.com/danieljwright/CV-project/assets/52325405/b582490d-e8c1-42b9-8929-1abea8ca5c57)
-
-The fourth image shows the most dissimilar filters learned, measured with the Person Correlation. This was obtained from a model trained on a dataset modified with the random erase, and a model trained on a dataset with the random rotate. 
-![WhatsApp Image 2024-06-14 at 14 18 25_d17145f0](https://github.com/danieljwright/CV-project/assets/52325405/95ec259c-f9b2-4f85-9d27-9a8b673d608f)
-
-The fifth image shows the most similar filters learned, measured with the Frobenius Norm. This was obtained from a model trained on a dataset with additive gaussian noise and a model trained on a dataset with random rotate applied. Qualitatively, this also appears to be an edge detector. 
-![WhatsApp Image 2024-06-14 at 14 18 36_95c67a36](https://github.com/danieljwright/CV-project/assets/52325405/392618f0-6afc-4025-aa34-6bfaf44fb8b8)
-
-The sixth image below shows the most dissimilar filters learned, measured iwth the Frobenius Norm. This was obtained from a model trained on a dataset with additive gaussian noise and a model trained on a dataset with random erase applied. 
-
-![WhatsApp Image 2024-06-14 at 14 18 49_fadade7e](https://github.com/danieljwright/CV-project/assets/52325405/2a1378b1-8ce6-4931-9483-fed391914f76)
-
-Qualitatively, it appears that the random erase leads to the most dissimilar filters being learned. We conjecture that this is because the CNN learns edge and corner detectors, which are features largely invariant to the other transformations applied, however they are not invariant to the erasure of the pixel values. Intuitively this corresponds with the inherent difficulty of performing object classification on an occluded object due to the relative lack of information. 
 
 ## 4. Conclusion
 
