@@ -69,17 +69,17 @@ We have 10 convolutional filters in our model architecture in total, and after t
 
 Model Summary
 
-        Layer (type)      |         Output Shape      |   Param #
---------------------------|---------------------------|---------
-            Conv2d-1      |     [-1, 2, 28, 28]       |      20
-              ReLU-2      |     [-1, 2, 28, 28]       |       0
-         MaxPool2d-3      |     [-1, 2, 14, 14]       |       0
-            Conv2d-4      |     [-1, 4, 14, 14]       |      76
-              ReLU-5      |     [-1, 4, 14, 14]       |       0
-         MaxPool2d-6      |     [-1, 4, 7, 7]         |       0
-            Linear-7      |     [-1, 16]              |   3,152
-              ReLU-8      |     [-1, 16]              |       0
-            Linear-9      |     [-1, 10]              |      170
+|        Layer (type)      |         Output Shape      |   Param #|
+|--------------------------|---------------------------|--------- |
+|            Conv2d-1      |     [-1, 2, 28, 28]       |      20  |
+|              ReLU-2      |     [-1, 2, 28, 28]       |       0  |
+|         MaxPool2d-3      |     [-1, 2, 14, 14]       |       0  |
+|            Conv2d-4      |     [-1, 4, 14, 14]       |      76  |
+|              ReLU-5      |     [-1, 4, 14, 14]       |       0  |
+|         MaxPool2d-6      |     [-1, 4, 7, 7]         |       0  |
+|            Linear-7      |     [-1, 16]              |   3,152  |
+|              ReLU-8      |     [-1, 16]              |       0  |
+|            Linear-9      |     [-1, 10]              |      170 |
 
 
 Total params: 3,418 |
