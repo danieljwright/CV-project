@@ -90,6 +90,7 @@ Params size (MB): 0.01
 Estimated Total Size (MB): 0.06
 ----------------------------------------------------------------
 
+
 ## 3. Results and Discussion
 
 We obtained the average similarity scores over 20 iterations for each of the 10 filters in the model across the six noisy datasets. These are the averages of the pairwise similarities for each filter across all the six datasets over 20 iterations. These are shown below in Table 1. 
