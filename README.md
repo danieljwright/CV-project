@@ -82,15 +82,17 @@ Model Summary
 |            Linear-9      |     [-1, 10]              |      170 |
 
 
-Total params: 3,418 |
-Trainable params: 3,418 |
-Non-trainable params: 0 |
-----------------------------------------------------------------
-Input size (MB): 0.00 |
-Forward/backward pass size (MB): 0.04 |
-Params size (MB): 0.01 |
-Estimated Total Size (MB): 0.06 |
-----------------------------------------------------------------
+
+---------------------------------------
+|Total params: 3,418                  |
+|Trainable params: 3,418              |
+|Non-trainable params: 0              |
+---------------------------------------
+|Input size (MB): 0.00                 |
+|Forward/backward pass size (MB): 0.04 |
+|Params size (MB): 0.01                |
+|Estimated Total Size (MB): 0.06       |
+---------------------------------------
 
 
 
