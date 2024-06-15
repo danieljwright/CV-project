@@ -9,9 +9,9 @@ As the applications of computer vision have grown and deep learning models have 
 
 ## 2. Methodology
 
-We first shuffle the MNIST training dataset, which consists of 60000 images. We then take 6 different subsets of this shuffled dataset, with 10000 images in each subset, and apply a different noise to each of these subsets. These noises were chosen such that they are meaningful in a grey-scale image digit classification context. As such we have not used any color transformations.
+We first shuffle the MNIST training dataset, which consists of 60000 images. We then take 6 different subsets of this shuffled dataset, with 10000 images in each subset, and apply a different noise to each of these subsets. These noises were chosen such that they are meaningful in a grey-scale image digit classification context. As such we have not used any color transformations. Examples of the transformations are shown in the image below.
 
-1) The noise that we apply to the first subset is a random perspective transform on each input image, using torchvision.transforms.v2.RandomPerspective(). We set the probability of an image being transformed as 1, as we want all images to be transformed. The degree of distortion is set to 0.3, and the fill value is set to -1, so areas outside the transformed image are filled using the edge pixel value. An example of such a transformation is shown in the image below. This mimics a digit being angled away or towards the camera in an image.
+1) The noise that we apply to the first subset is a random perspective transform on each input image, using torchvision.transforms.v2.RandomPerspective(). We set the probability of an image being transformed as 1, as we want all images to be transformed. The degree of distortion is set to 0.3, and the fill value is set to -1, so areas outside the transformed image are filled using the edge pixel value. This mimics a digit being angled away or towards the camera in an image.
 
 2) For the second subset, we apply random gaussian blur to each image, using torchvision.transforms.v2.GaussianBlur(), using a gaussian kernel os size 5, and a standard deviation uniformly chosen from the range (1, 2) for creating the kernel that will do the blurring. This approximates an image being taken with a lower quality camera, or the image being taken at a distance.
 
