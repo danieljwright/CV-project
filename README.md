@@ -24,10 +24,7 @@ We first shuffle the MNIST training dataset, which consists of 60000 images. We 
 6) Finally, for the sixth subset, we randomly rotate the images using torchvision.transforms.v2.RandomRotation() upto 30 degrees. This transform mimics the digit being rotated in an image, and also different handwriting styles to an extent. However, due to the rotational symmetry of certain digits, only upto 30 degrees was used.
 
 
-![input](https://github.com/danieljwright/CV-project/assets/60939523/fa3ef1c3-cd13-4782-9b1f-44e2d41dcd6f)
-
 ![Transformation Pipeline](https://github.com/danieljwright/CV-project/raw/main/transformation_pipeline.jpg)
-
 
 
 We then define a simple Convolutional Neural Network, which will train on all of these subsets separately, and the entire training dataset (without any noise) as well. Our CNN has two convolutional layers, the first one having 1 input channel and 2 output channels, and the second one having 2 input and 4 output channels, both having kernel sizes of 3, and stride and padding of 1. Both convolutional layers are followed by max pooling layers using a kernel size of 2, stride of 2, and a padding of 0. These are followed by two fully connected linear layers, with the last layer having 10 outputs corresponding to the 10 classes. We train this network across all datasets using the Adam optimizer using a learning rate of 0.001, a batch size of 64, for 6 epochs, and the loss function that is optimized is the Cross Entropy Loss. We then check for similarities between the trained filters to warm start training on the entire noiseless MNIST dataset using the most similar filters. We also train the same network on the entire dataset using randomly initialized weights, and compare the classiciation accuracy on the unseen test dataset for both methods. Both of these training procedures are run for 1 epoch. We believe that using trained filters that are found to be similar across different noisy datasets are noise-invariant and if training on a new and larger dataset is warm started using these noise invariant filters, the training procedure can be guided in optimal directions, helping the network generalize better.
@@ -79,20 +76,21 @@ We obtained the average similarity scores over 20 iterations for each of the 10 
 | Metric                         | Filter 1   | Filter 2   | Filter 3   | Filter 4   | Filter 5   | Filter 6   | Filter 7   | Filter 8   | Filter 9   | Filter 10  |
 |--------------------------------|------------|------------|------------|------------|------------|------------|------------|------------|------------|------------|
 | **Cosine similarity**          |            |            |            |            |            |            |            |            |            |            |
-| Avg                            | 0.31619102 | 0.39206314 | 0.32767773 | 0.33037522 | 0.32841057 | 0.3435595  | 0.3361762  | 0.37068677 | 0.32395244 | 0.31451932 |
-| Std                            | 0.25814608 | 0.27347025 | 0.23110147 | 0.22741994 | 0.21829844 | 0.22780581 | 0.21624844 | 0.24406238 | 0.22018431 | 0.22252244 |
+| Avg                            | 0.34358683 | 0.35845244 | 0.34136826 | 0.3577973  | 0.32331955 | 0.35565147 | 0.33031228 | 0.34108618 | 0.34629586 | 0.36081052 |
+| Std                            | 0.25206524 | 0.2547853  | 0.2398826  | 0.23000914 | 0.23767488 | 0.245126   | 0.21687616 | 0.23442131 | 0.24160744 | 0.23463367 |
 | **Pearson coefficient**        |            |            |            |            |            |            |            |            |            |            |
-| Avg                            | 0.34174002 | 0.37455269 | 0.3160879  | 0.29002075 | 0.31419466 | 0.31730315 | 0.37767744 | 0.34377837 | 0.3730682  | 0.35122528 |
-| Std                            | 0.234311   | 0.25126004 | 0.21325038 | 0.20954852 | 0.20930642 | 0.22417264 | 0.2118101  | 0.21775986 | 0.25721901 | 0.24133763 |
+| Avg                            | 0.362284   | 0.36033085 | 0.32567469 | 0.33541251 | 0.33940847 | 0.32689811 | 0.34990946 | 0.34706977 | 0.32262877 | 0.33764659 |
+| Std                            | 0.24923254 | 0.23640222 | 0.21519991 | 0.2344259  | 0.22949002 | 0.20990646 | 0.23824699 | 0.22018443 | 0.22329599 | 0.22861876 |
 | **Frobenius norm**             |            |            |            |            |            |            |            |            |            |            |
-| Avg                            | 1.7596636  | 1.6536038  | 1.1763726  | 1.2730144  | 1.2649969  | 1.3172685  | 1.2530814  | 1.1828452  | 1.1642699  | 1.2038964  |
-| Std                            | 0.47468022 | 0.41801614 | 0.3258538  | 0.37116513 | 0.33728537 | 0.35514113 | 0.32381335 | 0.3204852  | 0.33116174 | 0.35387298 |
+| Avg                            | 1.8106298  | 1.8253623  | 1.3027258  | 1.2402626  | 1.2421654  | 1.2263647  | 1.2633992  | 1.3154866  | 1.2510338  | 1.3036119  |
+| Std                            | 0.52752024 | 0.49355268 | 0.37172166 | 0.40557528 | 0.3969821  | 0.3711481  | 0.37935027 | 0.43620571 | 0.43121612 | 0.40887198 |
+
 
 On average, each filter across the six noisy datasets is only somewhat similar, as can be seen in the results, meaning that it is hard to find a filter that is similar for all the noisy datasets. However, for a given filter, for certain pairs of noisy datasets, the similarity is more. For example, over all filters, the maximum similarity we found for any filter for any two datasets using the different similarity metrics was as follows : 
 
-1) Cosine Similarity : 0.94
-2) Pearson Correlation Coefficient : 0.95
-3) Frobenius Norm : 0.34 (The lesser the better)
+1) Cosine Similarity : 0.96
+2) Pearson Correlation Coefficient : 0.97
+3) Frobenius Norm : 0.39 (The lower the better)
 
 Hence, there do exist pairs for a given filter across certain noisy datasets that are quite similar, which we believe can help us warm start our network. We believe that certain pairs of noises make it more conducive to learn similar noise-invariant filters than the others. For the 20 trials, we looked at the most commonly selected pair of models for each similarity metric, across all the filters. This is shown in Table 2.
 
@@ -112,10 +110,11 @@ The model warm-started using the Pearson similarity metric performed the best, w
 
 | Metric                          | Average Accuracy | Standard Deviation | Max Accuracy |
 |---------------------------------|------------------|--------------------|--------------|
-| Cosine Similarity               | 90.2295          | 8.3578             | 95.11        |
-| Random Init                     | 94.057           | 1.6521             | 95.68        |
-| Pearson Coefficient             | 91.8830          | 4.9802             | 95.29        |
-| Frobenius Norm                  | 90.8165          | 3.4740             | 94.76        |
+| Cosine Similarity               | 89.019           | 9.9472             | 95.68        |
+| Pearson Coefficient             | 90.7775          | 7.0131             | 95.34        |
+| Frobenius Norm                  | 86.713           | 20.3386            | 95.69        |
+| Random Init                     | 94.316           | 1.0788             | 95.68        |
+
 
 Hence, our method unfortunately does not manage to outperform random initialisation, no matter what similarity metric we choose to select similar filters. Random initialization, over many trials gives much less standard deviation over the test accuracies, a higher maximum test accuracy, and also a higher average test accuracy than our method. Hence, it consistently generalizes better than our method, and also is more robust in terms of range of test classification accuracies. We suspect that our method requires comparison between even more types of noisy datasets to find filters that are even more noise-invariant, and it is very hard to make multiple datasets while exhausting all types of possible noises. The fact that we ony warm-start the convolutional filters might have made our method unstable as well, and warm starting the biases and the parameters of the fully connected layer might be useful. We also do not compare each filter with every filter across all other models, comparing a filter only to its corresponding filter across the other models. Doing a more thorough comparison might result in a selection of more noise-invariant filters. It might also be possible that filters that learn the same thing might appear at different locations for the different models that we train over the six noisy datasets. It might be that our selection procedure for each of the ten filters for our CNN results in roughly the same filter being selected at different locations for warm starting, which can harm generalization. Also, even though our selected filters are noise-invariant, they might still be biased to perform slightly better on the noisy datasets they were trained on. Hence, in the current state in which our method is used, a random initialization of weights still results in better test classification accuracy. Although our method is different to what was done in [1] as mentioned before, we are still unable to achieve positive results.
 
@@ -128,12 +127,15 @@ We also compared the chosen weights for the warm-started model with the final we
 
 | Metric               | Average Similarity |
 |----------------------|--------------------|
-| Random Initialisation| 0.709              |
-| Cosine Similarity    | 0.954              | 
-| Pearson Coefficient  | 0.930              | 
-| Frobenius Norm       | 0.929              | 
+| Random Initialisation| 0.733              |
+| Cosine Similarity    | 0.907              | 
+| Pearson Coefficient  | 0.956              | 
+| Frobenius Norm       | 0.931              | 
+
 
 In [1], the authors found that there are instances where warm starting performs as well as random initialization, but in those cases, the weights by the end of training were not similar to the ones as the warm started weights at the beginning of training. Hence, these warm started models were essentially forgetting their warm started weights, making the warm starting procedure pointless. We agree with this observation through our results, as we observe that the reference average similarity between randomly initialised and converged convolutional filters is less than the average similarity between the warm started and converged convolutional filters for our method, using any similarity metric. Hence, our warm started filters are not "forgotten", which hurts classification performance on the test dataset. Using a different set of hyperparameters might have helped our method "forget" the warm started weights, but that makes the enitre excercise pointless.
+
+We have also included a comparison of the most similar filter and least similar filter found through each similarity measure. These are displayed in the heatmaps below. Qualitatively it appears that the most similar filters converge to edge or corner detectors. These features would remain unchanged by some of the transformations we applied and so are invariant, giving good performance on the test set.
 
 ![WhatsApp Image 2024-06-14 at 14 15 43_ac876346](https://github.com/danieljwright/CV-project/assets/52325405/19b2b7ca-7122-41fe-96ed-c95524421624)
 ![WhatsApp Image 2024-06-14 at 14 17 20_23409c29](https://github.com/danieljwright/CV-project/assets/52325405/f8d1c2fa-ff05-44cc-b5b0-af8c9b13ec78)
