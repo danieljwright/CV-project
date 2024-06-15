@@ -83,7 +83,6 @@ Model Summary
 
 
 
----------------------------------------
 |Total params: 3,418                  |
 |Trainable params: 3,418              |
 |Non-trainable params: 0              |
@@ -92,8 +91,6 @@ Model Summary
 |Forward/backward pass size (MB): 0.04 |
 |Params size (MB): 0.01                |
 |Estimated Total Size (MB): 0.06       |
----------------------------------------
-
 
 
 ## 3. Results and Discussion
