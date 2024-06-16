@@ -59,8 +59,8 @@ The frobenius norm can range from 0 to &infin;, with a score closer to 0 implyin
 - Y : The second vector.
 - X<sub>i</sub> : The i-th element in the vector X.
 - Y<sub>i</sub> : The i-th element in the vector Y.
-- ![X bar](https://latex.codecogs.com/png.latex?\dpi{100}&space;\color{white}&space;\bar{X}): The mean of vector X.
-- ![Y bar](https://latex.codecogs.com/png.latex?\dpi{100}&space;\color{white}&space;\bar{Y}): The mean of vector Y.
+- ![X bar](https://latex.codecogs.com/png.latex?\dpi{100}&space;\color{black}&space;\bar{X}): The mean of vector X.
+- ![Y bar](https://latex.codecogs.com/png.latex?\dpi{100}&space;\color{black}&space;\bar{Y}): The mean of vector Y.
 - n : The number of elements (length) of the vectors X and Y.
 
 A score of 1 implies perfect positive linear relationship, while a score of -1 implies perfect negative linear relationship. A score of 0 implies that there is no linear relationship between the two filters. SImilarly to the cosine similarity case, we return the absolute value of the pearson correlation coefficent, for the same reasons.
