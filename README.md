@@ -35,7 +35,7 @@ To find the most similar filters we need a measure for similarity between two fi
 
 1) Cosine Similarity : We flatten the two filters to be compared so that they become one dimensional vectors and then compute the cosine similarity between them using torch.nn.functional.cosine_similarity() as follows,
 
-![similarity](https://latex.codecogs.com/png.latex?\dpi{150}\color{white}%20\text{similarity}%20=%20\frac{x_1%20\cdot%20x_2}{\max(%7C%7Cx_1%7C%7C_2,%20\epsilon)%20\cdot%20\max(%7C%7Cx_2%7C%7C_2,%20\epsilon)})
+![similarity](https://latex.codecogs.com/png.latex?\dpi{150}\color{black}%20\text{similarity}%20=%20\frac{x_1%20\cdot%20x_2}{\max(%7C%7Cx_1%7C%7C_2,%20\epsilon)%20\cdot%20\max(%7C%7Cx_2%7C%7C_2,%20\epsilon)})
 
 where x<sub>1</sub> and x<sub>2</sub> are the flattened vectors, and epsilon is a small value (1e-8) to avoid division by zero.
 
@@ -43,7 +43,7 @@ A score of -1 represents oppositely pointing vectors, while a score of 1 means t
 
 2) Frobenius Norm : We take two matrices corresponding to the two filters and subtract one from the other, and take the frobenius norm of the resulting matrix, using numpy.linalg.norm(), setting order = 'fro'. It is computed as follows,
 
-![Frobenius Norm](https://latex.codecogs.com/png.latex?\dpi{150}\color{white}%5C%7CA%20-%20B%5C%7C_F%20%3D%20%5Csqrt%7B%5Csum_%7Bi%3D1%7D%5Em%20%5Csum_%7Bj%3D1%7D%5En%20%7Ca_%7Bij%7D%20-%20b_%7Bij%7D%7C%5E2%7D)
+![Frobenius Norm](https://latex.codecogs.com/png.latex?\dpi{150}\color{black}%5C%7CA%20-%20B%5C%7C_F%20%3D%20%5Csqrt%7B%5Csum_%7Bi%3D1%7D%5Em%20%5Csum_%7Bj%3D1%7D%5En%20%7Ca_%7Bij%7D%20-%20b_%7Bij%7D%7C%5E2%7D)
 
 Where:
 - A and B are mxn (28x28) matrices.
@@ -53,7 +53,7 @@ The frobenius norm can range from 0 to &infin;, with a score closer to 0 implyin
 
 3) Pearson Correlation Coefficient : We flatten the two filters into 1-D vectors and then find the Pearson Correlation Coefficient between them, using numpy.corrcoef(), using the given formula,
 
-![Pearson correlation coefficient formula](https://latex.codecogs.com/png.latex?\dpi{150}&space;\color{white}&space;r&space;=&space;\frac{\sum_{i=1}^{n}&space;(X_i&space;-&space;\bar{X})&space;(Y_i&space;-&space;\bar{Y})}{\sqrt{\sum_{i=1}^{n}&space;(X_i&space;-&space;\bar{X})^2}&space;\sqrt{\sum_{i=1}^{n}&space;(Y_i&space;-&space;\bar{Y})^2}})
+![Pearson correlation coefficient formula](https://latex.codecogs.com/png.latex?\dpi{150}&space;\color{black}&space;r&space;=&space;\frac{\sum_{i=1}^{n}&space;(X_i&space;-&space;\bar{X})&space;(Y_i&space;-&space;\bar{Y})}{\sqrt{\sum_{i=1}^{n}&space;(X_i&space;-&space;\bar{X})^2}&space;\sqrt{\sum_{i=1}^{n}&space;(Y_i&space;-&space;\bar{Y})^2}})
 
 - X : The first vector.
 - Y : The second vector.
