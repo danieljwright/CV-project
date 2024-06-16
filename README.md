@@ -139,7 +139,7 @@ The sixth image below shows the most dissimilar filters learned, measured with t
 
 ![WhatsApp Image 2024-06-14 at 14 18 49_fadade7e](https://github.com/danieljwright/CV-project/assets/52325405/2a1378b1-8ce6-4931-9483-fed391914f76)
 
-Qualitatively, it appears that the random erase leads to the most dissimilar filters being learned. We conjecture that this is because the CNN learns edge and corner detectors, which are features largely invariant to the other transformations applied, however they are not invariant to the erasure of the pixel values. Intuitively this corresponds with the inherent difficulty of performing object classification on an occluded object due to the relative lack of information. 
+In these cases, the random erase has led to the most dissimilar filters being learnt. We conjecture that this is because the CNN learns edge and corner detectors, which are features largely invariant to the other transformations applied, however they are not invariant to the erasure of the pixel values. Intuitively this corresponds with the inherent difficulty of performing object classification on an occluded object due to the relative lack of information. 
 
 
 The average test accuracy of the warm-started model trained after selecting filters to start training with based on each similarity metric and the average test accuracy of a trained model that was randomly intialised, are shown in Table 3.
