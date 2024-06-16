@@ -37,7 +37,7 @@ To find the most similar filters we need a measure for similarity between two fi
 
 ![similarity](https://latex.codecogs.com/png.latex?\dpi{150}\color{white}%20\text{similarity}%20=%20\frac{x_1%20\cdot%20x_2}{\max(%7C%7Cx_1%7C%7C_2,%20\epsilon)%20\cdot%20\max(%7C%7Cx_2%7C%7C_2,%20\epsilon)})
 
-where x<sub>1</sub> and x<sub>2</sub> are the flattened vectors.
+where x<sub>1</sub> and x<sub>2</sub> are the flattened vectors, and epsilon is a small value (1e-8) to avoid division by zero.
 
 A score of -1 represents oppositely pointing vectors, while a score of 1 means that the vectors have the same orientation and direction. A score of 0 represents orthogonal vectors. We return the absolute value of cosine similarity, as we believe that oppositely pointing vectors represent a case where the filters are trying to learn the same concept in opposite manners to each other in space, and hence essentially, they are similar.
 
