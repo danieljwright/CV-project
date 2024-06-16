@@ -1,7 +1,7 @@
 # Warm Starting Convolutional Neural Networks and Filter Similarity
 Authors: Daniel Wright (5932033) & Kunal Kaushik (6050549) & Alexandros Theocharous 5930901
 
-In this blog post we present the results of our study into whether a CNN can be warm started using convolutional filters that are found to be similar after training the same CNN across different noisy subsets of the original dataset. This can potentially lead to better generalization accuracy than simply randomly initializing the filters for training, and decrease training time in the long run as weights can be reused. This work is part of the course CS4245 Computer Vision by Deep Learning in 2023/2024 at TU Delft. 
+In this blog post we present the results of our study into whether a CNN can be warm started using convolutional filters that are found to be similar after training the same CNN across different noisy subsets of the original dataset. This can potentially lead to better generalization accuracy than simply randomly initializing the filters for training, and decrease training time in the long run as weights can be reused. This work is part of the course CS4245 Computer Vision by Deep Learning in 2023/2024 at TU Delft, for group 6.
 
 ## 1. Introduction
 
